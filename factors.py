@@ -1,29 +1,29 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys
 
-def factorize(number):
-    factors = []
-    for i in range(2, number // 2 + 1):
+
+def factorize_number(number):
+    for i in range(2, int(number**0.5) + 1):
         if number % i == 0:
-            factors.append((i, number // i))
-    return factors
+            return i, number // i
+    return None
 
-if len(sys.argv) != 2:
-    print("Usage: factors <file>")
-    sys.exit(1)
 
-try:
-    with open(sys.argv[1], 'r') as file:
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: {} <file>".format(sys.argv[0]))
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+
+    with open(input_file, 'r') as file:
         for line in file:
-            number = int(line.strip())
-            factorizations = factorize(number)
-            if factorizations:
-                for factors in factorizations:
-                    print(f"{number}={factors[0]}*{factors[1]}")
-except FileNotFoundError:
-    print(f"File '{sys.argv[1]}' not found.")
-    sys.exit(1)
-except ValueError:
-    print(f"Invalid input in '{sys.argv[1]}' - Please make sure all lines are valid natural numbers greater than 1.")
-    sys.exit(1)
+            number = int(line.rstrip())
+            factors = factorize_number(number)
+            if factors:
+                print("{}={}*{}".format(number, factors[0], factors[1]))
+
+
+if __name__ == "__main__":
+    main()
