@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+import sys
+from sympy import factorint
+
+def factorize_number(number):
+    factors = factorint(number)
+    if len(factors) == 2:
+        return tuple(factors.keys())
+    else:
+        return None
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: {} <number>".format(sys.argv[0]))
+        sys.exit(1)
+
+    number = int(sys.argv[1])
+    factors = factorize_number(number)
+
+    if factors:
+        print("{}={}*{}".format(number, factors[0], factors[1]))
+    else:
+        print("Unable to factorize {} into two prime numbers.".format(number))
+
+if __name__ == "__main__":
+    main()
+
